@@ -6,7 +6,7 @@ const checkAllIn = require('./lib/checkAllIn');
 
 class Player {
   static get VERSION() {
-    const version = 5.2;
+    const version = 5.5;
     return `v${version}`;
   }
 
@@ -57,12 +57,10 @@ class Player {
         if (PAIR || TWO || THREE || hasSameSuits(cards, 4)) {
           return call;
         }
-        else if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
+        if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
           return raise;
         }
-        else {
-          return 0;
-        }
+        return 0;
 
       case 2: {
         // if (checkAllIn(gameState.players)) {
@@ -71,12 +69,10 @@ class Player {
         if (PAIR || TWO || THREE || hasSameSuits(cards, 4)) {
           return call;
         }
-        else if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
+        if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
           return raise;
         }
-        else {
-          return 0;
-        }
+        return 0;
       }
 
       case 3: {
@@ -89,12 +85,10 @@ class Player {
         // else if (hasSameSuits(cards, 5)) {
         //   return call;
         // }
-        else if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
+        if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
           return raise;
         }
-        else {
-          return 0;
-        }
+        return 0;
       }
 
       default:
