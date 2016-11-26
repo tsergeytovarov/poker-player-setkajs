@@ -1,46 +1,66 @@
-Array.prototype.getUnique = function(){
-   var u = {}, a = [];
-   for(var i = 0, l = this.length; i < l; ++i){
-      if(u.hasOwnProperty(this[i])) {
-         continue;
-      }
-      a.push(this[i]);
-      u[this[i]] = 1;
-   }
-   return a;
-};
-
-const composeCards = (communityCards, holeCards) => communityCards.concat(holeCards);
-
-const hasSameRanks = cards => {
-  const ranks = cards.map(({rank}) => rank);
-  const uniques = ranks.getUnique();
-
-  return ranks.length !== uniques.length ? true : false;
-};
+const hasSameSuits = require('./lib/hasSameSuits');
+const format = require('./lib/format');
+const analyze = require('./lib/analyze');
 
 class Player {
   static get VERSION() {
-    const version = 1.3;
+    const version = 2.2;
     return `v${version}`;
   }
 
   static betRequest(gameState) {
     const { current_buy_in } = gameState;
     const myPlayer = gameState.players[gameState.in_action];
-    const cards = composeCards(gameState.community_cards, myPlayer.hole_cards);
-    const rand = Math.random();
+    const cards = format.compose(gameState.community_cards, myPlayer.hole_cards);
+    // const round = gameState.round;
 
-    let bet;
-    console.log(rand);
+    // Rounds
+    let round;
+    switch (gameState.community_cards.length) {
+      case 0: round = 0; break;
+      case 3: round = 1; break;
+      case 4: round = 2; break;
+      case 5: round = 3; break;
+    }
+
+    // Ranks
+    const ranksResult = analyze.fn.hasSameRanks(cards);
+    const PAIR = ranksResult === analyze.constants.PAIR;
+    const THREE = ranksResult === analyze.constants.THREE;
+    const FOUR = ranksResult === analyze.constants.THREE;
+
+    const call = current_buy_in - myPlayer.bet;
+    const raise = (current_buy_in - myPlayer.bet) + gameState.minimum_raise;
+    const allIn = myPlayer.stack;
+
+    switch (round) {
+      case 0:
+        return call;
+
+      case 1:
+      case 2:
+        if (PAIR || THREE || hasSameSuits(cards, 4)) {
+          return call;
+        } else if (FOUR || hasSameSuits(cards, 5)) {
+          return allIn;
+        } else {
+          return 0;
+        }
+
+      case 3:
+        if (PAIR || THREE ) {
+          return call;
+        } else if (FOUR || hasSameSuits(cards, 5)) {
+          return allIn;
+        } else {
+          return 0;
+        }
+
+      default:
+        return call;
+    }
 
     console.log('\n\nActive cards:\n', cards, '\n\n')
-
-    if (hasSameRanks(cards)) {
-      return (current_buy_in - myPlayer.bet) + gameState.minimum_raise;
-    } else {
-      return bet = current_buy_in - myPlayer.bet;
-    }
   }
 
   static showdown(gameState) {
