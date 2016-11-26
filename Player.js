@@ -66,7 +66,7 @@ class Player {
         if (THREE || STRAIGHT || FLUSH) {
           return raise;
         }
-        if ( (PAIR && handValue > 9600) || TWO || hasSameSuits(cards, 4)) {
+        if ( PAIR || TWO || hasSameSuits(cards, 4)) {
           return call;
         }
         return 0;
@@ -78,7 +78,7 @@ class Player {
         if (THREE || STRAIGHT || FLUSH) {
           return raise;
         }
-        if ( (PAIR && handValue > 9600) || TWO) {
+        if ( PAIR || TWO) {
           return call;
         }
         return 0;
