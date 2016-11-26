@@ -6,7 +6,7 @@ const checkAllIn = require('./lib/checkAllIn');
 
 class Player {
   static get VERSION() {
-    return 'v11';
+    return 'v12';
   }
 
   static betRequest(gameState) {
@@ -50,7 +50,10 @@ class Player {
 
     switch (round) {
       case 0:
-        return call;
+        if (checkAllIn(gameState.players))
+          return 0;
+        else
+          return call;
 
       case 1:
       case 2:
