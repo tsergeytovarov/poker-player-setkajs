@@ -5,7 +5,7 @@ const rainman = require('./lib/rainman');
 
 class Player {
   static get VERSION() {
-    const version = 3;
+    const version = 3.1;
     return `v${version}`;
   }
 
@@ -42,51 +42,51 @@ class Player {
         return call;
 
       case 2: {
-        let res = rainman(cards);
-        if (res === 0) {
-          return call;
-        }
-        else {
-          const rank = res.rank;
-          if (rank > 0 && rank <= 3)
-            return call;
-          else if (rank > 3 && rank < 7)
-            return raise;
-          else
-            return 0;
-        }
-        return call;
-        // if (PAIR || THREE || hasSameSuits(cards, 4)) {
+        // let res = rainman(cards);
+        // if (res === 0) {
         //   return call;
-        // } else if (FOUR || hasSameSuits(cards, 5)) {
-        //   return allIn;
-        // } else {
-        //   return 0;
         // }
+        // else {
+        //   const rank = res.rank;
+        //   if (rank > 0 && rank <= 3)
+        //     return call;
+        //   else if (rank > 3 && rank < 7)
+        //     return raise;
+        //   else
+        //     return 0;
+        // }
+        // return call;
+        if (PAIR || THREE || hasSameSuits(cards, 4)) {
+          return call;
+        } else if (FOUR || hasSameSuits(cards, 5)) {
+          return allIn;
+        } else {
+          return 0;
+        }
       }
 
       case 3: {
-        let res = rainman(cards);
-        if (res === 0) {
-          return call;
-        }
-        else {
-          const rank = res.rank;
-          if (rank > 0 && rank <= 3)
-            return call;
-          else if (rank > 3 && rank < 7)
-            return raise;
-          else
-            return 0;
-        }
-        return call;
-        // if (PAIR || THREE ) {
+        // let res = rainman(cards);
+        // if (res === 0) {
         //   return call;
-        // } else if (FOUR || hasSameSuits(cards, 5)) {
-        //   return allIn;
-        // } else {
-        //   return 0;
         // }
+        // else {
+        //   const rank = res.rank;
+        //   if (rank > 0 && rank <= 3)
+        //     return call;
+        //   else if (rank > 3 && rank < 7)
+        //     return raise;
+        //   else
+        //     return 0;
+        // }
+        // return call;
+        if (PAIR || THREE ) {
+          return call;
+        } else if (FOUR || hasSameSuits(cards, 5)) {
+          return allIn;
+        } else {
+          return 0;
+        }
       }
 
       default:
