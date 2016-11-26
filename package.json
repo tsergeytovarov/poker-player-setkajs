@@ -10,7 +10,8 @@
   },
   "private": true,
   "dependencies": {
+    "body-parser": "1.15.2",
     "express": "4.x",
-    "body-parser": "1.15.2"
+    "sync-request": "3.0.1"
   }
 }
