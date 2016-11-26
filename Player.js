@@ -6,7 +6,7 @@ const checkAllIn = require('./lib/checkAllIn');
 
 class Player {
   static get VERSION() {
-    const version = 5.5;
+    const version = 10;
     return `v${version}`;
   }
 
@@ -41,6 +41,7 @@ class Player {
     const STRAIGHT = handResult === 'straight';
     const FLUSH = handResult === 'flush';
     const FULL_HOUSE = handResult === 'full house';
+    const STRAIGHT_FLUSH = handResult === 'straight flush';
 
     const call = current_buy_in - myPlayer.bet;
     const raise = (current_buy_in - myPlayer.bet) + gameState.minimum_raise;
@@ -50,6 +51,32 @@ class Player {
       case 0:
         return call;
 
+      case 1:
+      case 2:
+        if (STRAIGHT_FLUSH || FOUR || FULL_HOUSE) {
+          return allIn;
+        }
+        if (THREE || STRAIGHT || FLUSH) {
+          return raise;
+        }
+        if (PAIR || TWO || hasSameSuits(cards, 4)) {
+          return call;
+        }
+        return 0;
+
+      case 3:
+        if (STRAIGHT_FLUSH || FOUR || FULL_HOUSE) {
+          return allIn;
+        }
+        if (THREE || STRAIGHT || FLUSH) {
+          return raise;
+        }
+        if (PAIR || TWO) {
+          return call;
+        }
+        return 0;
+
+      /*
       case 1:
         // if (checkAllIn(gameState.players)) {
         //   return 0;
@@ -79,17 +106,18 @@ class Player {
         // if (checkAllIn(gameState.players)) {
         //   return 0;
         // }
-        if ( (PAIR || TWO || THREE) && checkAllIn(gameState.players) ) {
-          return 0;
+        if ( (PAIR || TWO || THREE) ) {
+          return call;
         }
         // else if (hasSameSuits(cards, 5)) {
         //   return call;
         // }
         if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
-          return raise;
+          return allIn;
         }
         return 0;
       }
+      */
 
       default:
         return call;
