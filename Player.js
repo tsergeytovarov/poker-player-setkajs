@@ -6,7 +6,7 @@ const checkAllIn = require('./lib/checkAllIn');
 
 class Player {
   static get VERSION() {
-    const version = 5.1;
+    const version = 5.2;
     return `v${version}`;
   }
 
@@ -105,6 +105,9 @@ class Player {
   }
 
   static showdown(gameState) {
+    console.log('>>> SHOWDOWN');
+    console.log(gameState);
+    console.log('<<< SHOWDOWN');
   }
 }
 
