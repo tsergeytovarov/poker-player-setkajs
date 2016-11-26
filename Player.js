@@ -6,12 +6,12 @@ const checkAllIn = require('./lib/checkAllIn');
 
 class Player {
   static get VERSION() {
-    const version = 4.9;
+    const version = 4.10;
     return `v${version}`;
   }
 
   static betRequest(gameState) {
-    // console.log(gameState);
+    console.log(gameState);
 
     const { current_buy_in } = gameState;
     const myPlayer = gameState.players[gameState.in_action];
