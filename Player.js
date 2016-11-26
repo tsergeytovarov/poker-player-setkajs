@@ -7,7 +7,7 @@ const checkAllIn = require('./lib/checkAllIn');
 
 class Player {
   static get VERSION() {
-    const version = 4.5;
+    const version = 4.6;
     return `v${version}`;
   }
 
@@ -76,7 +76,7 @@ class Player {
           return call;
         }
         else if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
-          return allIn;
+          return call;
         }
         else {
           return 0;
@@ -108,7 +108,7 @@ class Player {
         //   return call;
         // }
         else if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
-          return allIn;
+          return call;
         }
         else {
           return 0;
