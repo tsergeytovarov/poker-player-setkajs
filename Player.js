@@ -3,10 +3,11 @@ const format = require('./lib/format');
 const analyze = require('./lib/analyze');
 const hand = require('./lib/hand');
 const checkAllIn = require('./lib/checkAllIn');
+const hasPair = require('./lib/hasPair');
 
 class Player {
   static get VERSION() {
-    return 'v12';
+    return 'v15';
   }
 
   static betRequest(gameState) {
@@ -50,10 +51,12 @@ class Player {
 
     switch (round) {
       case 0:
-        if (checkAllIn(gameState.players))
-          return 0;
-        else
+        if (checkAllIn(gameState.players) && ['A', 'K', 'J', 'Q'].includes(hasPair(myPlayer.hole_cards)) )
           return call;
+        else if (checkAllIn(gameState.players))
+          return 0;
+
+        return call;
 
       case 1:
       case 2:
