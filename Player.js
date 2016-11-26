@@ -6,12 +6,12 @@ const checkAllIn = require('./lib/checkAllIn');
 
 class Player {
   static get VERSION() {
-    const version = 4.7;
+    const version = 4.8;
     return `v${version}`;
   }
 
   static betRequest(gameState) {
-    console.log(gameState);
+    // console.log(gameState);
 
     const { current_buy_in } = gameState;
     const myPlayer = gameState.players[gameState.in_action];
@@ -32,6 +32,7 @@ class Player {
     // const THREE = ranksResult === analyze.constants.THREE;
     // const FOUR = ranksResult === analyze.constants.THREE;
     const handResult = hand(cards).handName;
+    console.log(handResult);
     const HIGH_CARD = handResult === 'high card';
     const PAIR = handResult === 'one pair';
     const TWO = handResult === 'two pairs';
