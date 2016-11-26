@@ -66,9 +66,9 @@ class Player {
         //     return 0;
         // }
         // return call;
-        if (PAIR || THREE || hasSameSuits(cards, 4)) {
+        if (PAIR || TWO || THREE || hasSameSuits(cards, 4)) {
           return call;
-        } else if (FOUR || hasSameSuits(cards, 5)) {
+        } else if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
           return allIn;
         } else {
           return 0;
@@ -90,9 +90,9 @@ class Player {
         //     return 0;
         // }
         // return call;
-        if (PAIR || THREE ) {
+        if (PAIR || TWO || THREE || hasSameSuits(cards, 4)) {
           return call;
-        } else if (FOUR || hasSameSuits(cards, 5)) {
+        } else if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
           return allIn;
         } else {
           return 0;
