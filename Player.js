@@ -4,17 +4,20 @@ const analyze = require('./lib/analyze');
 
 class Player {
   static get VERSION() {
-    const version = 2;
+    const version = 2.1;
     return `v${version}`;
   }
 
   static betRequest(gameState) {
     const { current_buy_in } = gameState;
     const myPlayer = gameState.players[gameState.in_action];
-    const cards = composeCards(gameState.community_cards, myPlayer.hole_cards);
-    const ranksResult = analyze.fn.hasSameRanks(cards);
+    const cards = format.compose(gameState.community_cards, myPlayer.hole_cards);
     const round = gameState.round;
-    // let bet;
+
+    const ranksResult = analyze.fn.hasSameRanks(cards);
+    const PAIR = ranksResult === analyze.constants.PAIR;
+    const THREE = ranksResult === analyze.constants.THREE;
+    const FOUR = ranksResult === analyze.constants.THREE;
 
     const call = current_buy_in - myPlayer.bet;
     const raise = (current_buy_in - myPlayer.bet) + gameState.minimum_raise;
@@ -28,9 +31,9 @@ class Player {
       case 1:
       case 2:
       case 3: {
-        if (ranksResult === analyze.constants.PAIR || ranksResult === analyze.constants.THREE || hasSameSuits(cards, 4)) {
+        if (PAIR || THREE || hasSameSuits(cards, 4)) {
           return call;
-        } else if (ranksResult === analyze.constants.FOUR || hasSameSuits(cards, 5)) {
+        } else if (FOUR || hasSameSuits(cards, 5)) {
           return allIn;
         } else {
           return 0;
@@ -38,9 +41,9 @@ class Player {
       }
 
       case 4: {
-        if (ranksResult === analyze.constants.PAIR || ranksResult === analyze.constants.THREE ) {
+        if (PAIR || THREE ) {
           return call;
-        } else if (ranksResult === analyze.constants.FOUR || hasSameSuits(cards, 5)) {
+        } else if (FOUR || hasSameSuits(cards, 5)) {
           return allIn;
         } else {
           return 0;
