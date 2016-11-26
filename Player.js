@@ -6,8 +6,7 @@ const checkAllIn = require('./lib/checkAllIn');
 
 class Player {
   static get VERSION() {
-    const version = 10;
-    return `v${version}`;
+    return 'MAKE JS GREAT AGAIN';
   }
 
   static betRequest(gameState) {
