@@ -1,7 +1,7 @@
 const hasSameSuits = require('./lib/hasSameSuits');
 const format = require('./lib/format');
 const analyze = require('./lib/analyze');
-// const rainman = require('./lib/rainman');
+const rainman = require('./lib/rainman');
 
 class Player {
   static get VERSION() {
@@ -41,23 +41,53 @@ class Player {
       case 1:
         return call;
 
-      case 2:
-        if (PAIR || THREE || hasSameSuits(cards, 4)) {
+      case 2: {
+        let res = rainman(cards);
+        if (res === 0) {
           return call;
-        } else if (FOUR || hasSameSuits(cards, 5)) {
-          return allIn;
-        } else {
-          return 0;
         }
+        else {
+          const rank = res.rank;
+          if (rank > 0 && rank <= 3)
+            return call;
+          else if (rank > 3 && rank < 7)
+            return raise;
+          else
+            return 0;
+        }
+        return call;
+        // if (PAIR || THREE || hasSameSuits(cards, 4)) {
+        //   return call;
+        // } else if (FOUR || hasSameSuits(cards, 5)) {
+        //   return allIn;
+        // } else {
+        //   return 0;
+        // }
+      }
 
-      case 3:
-        if (PAIR || THREE ) {
+      case 3: {
+        let res = rainman(cards);
+        if (res === 0) {
           return call;
-        } else if (FOUR || hasSameSuits(cards, 5)) {
-          return allIn;
-        } else {
-          return 0;
         }
+        else {
+          const rank = res.rank;
+          if (rank > 0 && rank <= 3)
+            return call;
+          else if (rank > 3 && rank < 7)
+            return raise;
+          else
+            return 0;
+        }
+        return call;
+        // if (PAIR || THREE ) {
+        //   return call;
+        // } else if (FOUR || hasSameSuits(cards, 5)) {
+        //   return allIn;
+        // } else {
+        //   return 0;
+        // }
+      }
 
       default:
         return call;
