@@ -12,6 +12,6 @@
   "dependencies": {
     "body-parser": "1.15.2",
     "express": "4.x",
-    "poker-evaluator": "0.3.1"
+    "latest-poker-evaluator": "0.3.2"
   }
 }
