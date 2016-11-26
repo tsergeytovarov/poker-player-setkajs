@@ -1,10 +1,11 @@
 const hasSameSuits = require('./lib/hasSameSuits');
 const format = require('./lib/format');
 const analyze = require('./lib/analyze');
+// const rainman = require('./lib/rainman');
 
 class Player {
   static get VERSION() {
-    const version = 2.2;
+    const version = 2.4;
     return `v${version}`;
   }
 
@@ -38,6 +39,8 @@ class Player {
         return call;
 
       case 1:
+        return call;
+
       case 2:
         if (PAIR || THREE || hasSameSuits(cards, 4)) {
           return call;
