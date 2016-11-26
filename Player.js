@@ -1,11 +1,11 @@
 const hasSameSuits = require('./lib/hasSameSuits');
 const format = require('./lib/format');
 const analyze = require('./lib/analyze');
-const rainman = require('./lib/rainman');
+// const rainman = require('./lib/rainman');
 
 class Player {
   static get VERSION() {
-    const version = 2.3;
+    const version = 2.4;
     return `v${version}`;
   }
 
