@@ -1,11 +1,12 @@
 const hasSameSuits = require('./lib/hasSameSuits');
 const format = require('./lib/format');
 const analyze = require('./lib/analyze');
-const rainman = require('./lib/rainman');
+// const rainman = require('./lib/rainman');
+const hand = require('./lib/hand');
 
 class Player {
   static get VERSION() {
-    const version = 3.1;
+    const version = 4;
     return `v${version}`;
   }
 
@@ -25,10 +26,19 @@ class Player {
     }
 
     // Ranks
-    const ranksResult = analyze.fn.hasSameRanks(cards);
-    const PAIR = ranksResult === analyze.constants.PAIR;
-    const THREE = ranksResult === analyze.constants.THREE;
-    const FOUR = ranksResult === analyze.constants.THREE;
+    // const ranksResult = analyze.fn.hasSameRanks(cards);
+    // const PAIR = ranksResult === analyze.constants.PAIR;
+    // const THREE = ranksResult === analyze.constants.THREE;
+    // const FOUR = ranksResult === analyze.constants.THREE;
+    const handResult = hand(cards).handName;
+    const HIGH_CARD = handResult === 'high card';
+    const PAIR = handResult === 'one pair';
+    const TWO = handResult === 'two pairs';
+    const THREE = handResult === 'three of a kind';
+    const FOUR = handResult === 'four of a kind';
+    const STRAIGHT = handResult === 'straight';
+    const FLUSH = handResult === 'flush';
+    const FULL_HOUSE = handResult === 'full house';
 
     const call = current_buy_in - myPlayer.bet;
     const raise = (current_buy_in - myPlayer.bet) + gameState.minimum_raise;
