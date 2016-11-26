@@ -1,20 +1,21 @@
 const hasSameSuits = require('./lib/hasSameSuits');
 const format = require('./lib/format');
 const analyze = require('./lib/analyze');
-// const rainman = require('./lib/rainman');
 const hand = require('./lib/hand');
+const checkAllIn = require('./lib/checkAllIn');
 
 class Player {
   static get VERSION() {
-    const version = 4;
+    const version = 4.7;
     return `v${version}`;
   }
 
   static betRequest(gameState) {
+    console.log(gameState);
+
     const { current_buy_in } = gameState;
     const myPlayer = gameState.players[gameState.in_action];
     const cards = format.compose(gameState.community_cards, myPlayer.hole_cards);
-    // const round = gameState.round;
 
     // Rounds
     let round;
@@ -49,7 +50,18 @@ class Player {
         return call;
 
       case 1:
-        return call;
+        if (checkAllIn(gameState.players)) {
+          return 0;
+        }
+        else if (PAIR || TWO || THREE || hasSameSuits(cards, 4)) {
+          return call;
+        }
+        else if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
+          return call;
+        }
+        else {
+          return 0;
+        }
 
       case 2: {
         // let res = rainman(cards);
@@ -66,11 +78,16 @@ class Player {
         //     return 0;
         // }
         // return call;
-        if (PAIR || TWO || THREE || hasSameSuits(cards, 4)) {
+        if (checkAllIn(gameState.players)) {
+          return 0;
+        }
+        else if (PAIR || TWO || THREE || hasSameSuits(cards, 4)) {
           return call;
-        } else if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
-          return allIn;
-        } else {
+        }
+        else if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
+          return call;
+        }
+        else {
           return 0;
         }
       }
@@ -90,11 +107,19 @@ class Player {
         //     return 0;
         // }
         // return call;
-        if (PAIR || TWO || THREE || hasSameSuits(cards, 4)) {
+        if (checkAllIn(gameState.players)) {
+          return 0;
+        }
+        else if (PAIR || TWO || THREE) {
+          return 0;
+        }
+        // else if (hasSameSuits(cards, 5)) {
+        //   return call;
+        // }
+        else if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
           return call;
-        } else if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
-          return allIn;
-        } else {
+        }
+        else {
           return 0;
         }
       }
