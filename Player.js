@@ -6,7 +6,7 @@ const checkAllIn = require('./lib/checkAllIn');
 
 class Player {
   static get VERSION() {
-    return 'MAKE JS GREAT AGAIN';
+    return 'v11';
   }
 
   static betRequest(gameState) {
@@ -30,17 +30,19 @@ class Player {
     // const PAIR = ranksResult === analyze.constants.PAIR;
     // const THREE = ranksResult === analyze.constants.THREE;
     // const FOUR = ranksResult === analyze.constants.THREE;
-    const handResult = hand(cards).handName;
-    console.log(handResult);
-    const HIGH_CARD = handResult === 'high card';
-    const PAIR = handResult === 'one pair';
-    const TWO = handResult === 'two pairs';
-    const THREE = handResult === 'three of a kind';
-    const FOUR = handResult === 'four of a kind';
-    const STRAIGHT = handResult === 'straight';
-    const FLUSH = handResult === 'flush';
-    const FULL_HOUSE = handResult === 'full house';
-    const STRAIGHT_FLUSH = handResult === 'straight flush';
+    const handResult = hand(cards);
+    const handName = handResult.handName;
+    const handValue = handResult.value;
+    console.log(handName);
+    const HIGH_CARD = handName === 'high card';
+    const PAIR = handName === 'one pair';
+    const TWO = handName === 'two pairs';
+    const THREE = handName === 'three of a kind';
+    const FOUR = handName === 'four of a kind';
+    const STRAIGHT = handName === 'straight';
+    const FLUSH = handName === 'flush';
+    const FULL_HOUSE = handName === 'full house';
+    const STRAIGHT_FLUSH = handName === 'straight flush';
 
     const call = current_buy_in - myPlayer.bet;
     const raise = (current_buy_in - myPlayer.bet) + gameState.minimum_raise;
@@ -58,7 +60,7 @@ class Player {
         if (THREE || STRAIGHT || FLUSH) {
           return raise;
         }
-        if (PAIR || TWO || hasSameSuits(cards, 4)) {
+        if ( (PAIR && handValue > 9600) || TWO || hasSameSuits(cards, 4)) {
           return call;
         }
         return 0;
@@ -70,53 +72,10 @@ class Player {
         if (THREE || STRAIGHT || FLUSH) {
           return raise;
         }
-        if (PAIR || TWO) {
+        if ( (PAIR && handValue > 9600) || TWO) {
           return call;
         }
         return 0;
-
-      /*
-      case 1:
-        // if (checkAllIn(gameState.players)) {
-        //   return 0;
-        // }
-        if (PAIR || TWO || THREE || hasSameSuits(cards, 4)) {
-          return call;
-        }
-        if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
-          return raise;
-        }
-        return 0;
-
-      case 2: {
-        // if (checkAllIn(gameState.players)) {
-        //   return 0;
-        // }
-        if (PAIR || TWO || THREE || hasSameSuits(cards, 4)) {
-          return call;
-        }
-        if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
-          return raise;
-        }
-        return 0;
-      }
-
-      case 3: {
-        // if (checkAllIn(gameState.players)) {
-        //   return 0;
-        // }
-        if ( (PAIR || TWO || THREE) ) {
-          return call;
-        }
-        // else if (hasSameSuits(cards, 5)) {
-        //   return call;
-        // }
-        if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
-          return allIn;
-        }
-        return 0;
-      }
-      */
 
       default:
         return call;
