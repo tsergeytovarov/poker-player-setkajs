@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    const version = 1.1;
+    const version = 1.2;
     return `v${version}`;
   }
 
@@ -13,14 +13,14 @@ class Player {
     console.log(rand);
 
     // Call
-    // if (rand < 0.5) {
-    //   bet = current_buy_in - myPlayer.bet;
-    // }
+    if (rand < 0.5) {
+      bet = current_buy_in - myPlayer.bet;
+    }
 
     // Raise
-    //else {
+    else {
       bet = (current_buy_in - myPlayer.bet) + gameState.minimum_raise;
-    //}
+    }
 
     return bet;
   }
