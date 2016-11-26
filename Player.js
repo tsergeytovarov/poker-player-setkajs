@@ -4,7 +4,7 @@ const analyze = require('./lib/analyze');
 
 class Player {
   static get VERSION() {
-    const version = 2.1;
+    const version = 2.2;
     return `v${version}`;
   }
 
@@ -12,8 +12,18 @@ class Player {
     const { current_buy_in } = gameState;
     const myPlayer = gameState.players[gameState.in_action];
     const cards = format.compose(gameState.community_cards, myPlayer.hole_cards);
-    const round = gameState.round;
+    // const round = gameState.round;
 
+    // Rounds
+    let round;
+    switch (gameState.community_cards.length) {
+      case 0: round = 0; break;
+      case 3: round = 1; break;
+      case 4: round = 2; break;
+      case 5: round = 3; break;
+    }
+
+    // Ranks
     const ranksResult = analyze.fn.hasSameRanks(cards);
     const PAIR = ranksResult === analyze.constants.PAIR;
     const THREE = ranksResult === analyze.constants.THREE;
@@ -24,13 +34,11 @@ class Player {
     const allIn = myPlayer.stack;
 
     switch (round) {
-      case 0: {
+      case 0:
         return call;
-      }
 
       case 1:
       case 2:
-      case 3: {
         if (PAIR || THREE || hasSameSuits(cards, 4)) {
           return call;
         } else if (FOUR || hasSameSuits(cards, 5)) {
@@ -38,9 +46,8 @@ class Player {
         } else {
           return 0;
         }
-      }
 
-      case 4: {
+      case 3:
         if (PAIR || THREE ) {
           return call;
         } else if (FOUR || hasSameSuits(cards, 5)) {
@@ -48,8 +55,9 @@ class Player {
         } else {
           return 0;
         }
-      }
 
+      default:
+        return call;
     }
 
     console.log('\n\nActive cards:\n', cards, '\n\n')
