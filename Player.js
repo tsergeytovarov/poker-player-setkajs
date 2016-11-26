@@ -51,42 +51,28 @@ class Player {
         return call;
 
       case 1:
-        if (checkAllIn(gameState.players)) {
-          return 0;
-        }
-        else if (PAIR || TWO || THREE || hasSameSuits(cards, 4)) {
+        // if (checkAllIn(gameState.players)) {
+        //   return 0;
+        // }
+        if (PAIR || TWO || THREE || hasSameSuits(cards, 4)) {
           return call;
         }
         else if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
-          return call;
+          return raise;
         }
         else {
           return 0;
         }
 
       case 2: {
-        // let res = rainman(cards);
-        // if (res === 0) {
-        //   return call;
+        // if (checkAllIn(gameState.players)) {
+        //   return 0;
         // }
-        // else {
-        //   const rank = res.rank;
-        //   if (rank > 0 && rank <= 3)
-        //     return call;
-        //   else if (rank > 3 && rank < 7)
-        //     return raise;
-        //   else
-        //     return 0;
-        // }
-        // return call;
-        if (checkAllIn(gameState.players)) {
-          return 0;
-        }
-        else if (PAIR || TWO || THREE || hasSameSuits(cards, 4)) {
+        if (PAIR || TWO || THREE || hasSameSuits(cards, 4)) {
           return call;
         }
         else if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
-          return call;
+          return raise;
         }
         else {
           return 0;
@@ -94,31 +80,17 @@ class Player {
       }
 
       case 3: {
-        // let res = rainman(cards);
-        // if (res === 0) {
-        //   return call;
+        // if (checkAllIn(gameState.players)) {
+        //   return 0;
         // }
-        // else {
-        //   const rank = res.rank;
-        //   if (rank > 0 && rank <= 3)
-        //     return call;
-        //   else if (rank > 3 && rank < 7)
-        //     return raise;
-        //   else
-        //     return 0;
-        // }
-        // return call;
-        if (checkAllIn(gameState.players)) {
-          return 0;
-        }
-        else if (PAIR || TWO || THREE) {
+        if ( (PAIR || TWO || THREE) && checkAllIn(gameState.players) ) {
           return 0;
         }
         // else if (hasSameSuits(cards, 5)) {
         //   return call;
         // }
         else if (FOUR || FLUSH || STRAIGHT || FULL_HOUSE) {
-          return call;
+          return raise;
         }
         else {
           return 0;
