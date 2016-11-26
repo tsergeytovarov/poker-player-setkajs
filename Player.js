@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return '0.1.1';
+    return '1';
   }
 
   static betRequest(gameState) {
