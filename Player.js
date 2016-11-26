@@ -6,7 +6,7 @@ const checkAllIn = require('./lib/checkAllIn');
 
 class Player {
   static get VERSION() {
-    const version = 5.0;
+    const version = 5.1;
     return `v${version}`;
   }
 
