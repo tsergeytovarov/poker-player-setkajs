@@ -41,18 +41,6 @@ class Player {
     } else {
       return bet = current_buy_in - myPlayer.bet;
     }
-
-    // Call
-    // if (rand < 0.5) {
-      // bet = current_buy_in - myPlayer.bet;
-    // }
-
-    // Raise
-    //else {
-      // bet = (current_buy_in - myPlayer.bet) + gameState.minimum_raise;
-    //}
-
-    // return bet;
   }
 
   static showdown(gameState) {
