@@ -7,7 +7,7 @@ const hasPair = require('./lib/hasPair');
 
 class Player {
   static get VERSION() {
-    return 'v15';
+    return 'FINAL';
   }
 
   static betRequest(gameState) {
