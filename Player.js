@@ -5,7 +5,7 @@ const rainman = require('./lib/rainman');
 
 class Player {
   static get VERSION() {
-    const version = 2.4;
+    const version = 3;
     return `v${version}`;
   }
 
